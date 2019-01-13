@@ -17,12 +17,12 @@ os.chdir("C:\\Users\\User\\Documents\\GIT\\Kaggle-Kernel-Speech-Accent-Archive\\
 # https://nbviewer.jupyter.org/github/librosa/librosa/blob/master/examples/LibROSA%20demo.ipynb
 
 
-SAMPLE_RATE = 44100
+SAMPLE_RATE = 220500
 fname4 = 'recordings\\' + 'english385.mp3'   
-y, sr = librosa.core.load(fname4, sr=SAMPLE_RATE)
+y, sr = librosa.core.load(fname4, sr=SAMPLE_RATE, duration = 5)
 
 #######################
-# Mel spectrogram
+# log Mel spectrogram
 #######################
 S = librosa.feature.melspectrogram(y, sr=sr, n_mels=128)
 
@@ -108,8 +108,27 @@ plt.tight_layout()
 #######################
 # MFCC
 #######################
+y, sr = librosa.load(librosa.util.example_audio_file(), offset=30, duration=5)
+
+# 
+librosa.feature.mfcc(y=y, sr=8000)
+
+mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=40)
+
+import matplotlib.pyplot as plt
+plt.figure(figsize=(10, 4))
+librosa.display.specshow(mfccs, x_axis='time')
+plt.colorbar()
+plt.title('MFCC')
+plt.tight_layout()
+
+# plt.imshow(mfccs, cmap='hot', interpolation='nearest');
+
 # Next, we'll extract the top 13 Mel-frequency cepstral coefficients (MFCCs)
-mfcc  = librosa.feature.mfcc(S=log_S, n_mfcc=13)
+mfcc  = librosa.feature.mfcc(y ,sr = SAMPLE_RATE, n_mfcc=5)
+mfcc.shape
+
+plt.imshow(mfcc, cmap='hot', interpolation='nearest');
 
 # Let's pad on the first and second deltas while we're at it
 delta_mfcc  = librosa.feature.delta(mfcc)
@@ -202,8 +221,6 @@ plt.title('Beat-synchronous MFCC-$\Delta$-$\Delta^2$')
 plt.colorbar()
 
 plt.tight_layout()
-
-
 
 
 # Beat synchronization is flexible.
