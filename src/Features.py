@@ -19,7 +19,7 @@ os.chdir("C:\\Users\\User\\Documents\\GIT\\Kaggle-Kernel-Speech-Accent-Archive\\
 
 SAMPLE_RATE = 220500
 fname4 = 'recordings\\' + 'english385.mp3'   
-y, sr = librosa.core.load(fname4, sr=SAMPLE_RATE, duration = 5)
+y, sr = librosa.core.load(fname4, sr=SAMPLE_RATE, duration = 5,res_type='kaiser_fast')
 
 #######################
 # log Mel spectrogram
